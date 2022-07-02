@@ -18,7 +18,7 @@ class DashboardItemsController extends Controller
     {
         return view('dashboardAdmin.pages.items.index', [
             'title' => 'list lodging',
-            'items' => Item::all()
+            'items' => Item::paginate(6)
         ]);
     }
 
@@ -67,7 +67,12 @@ class DashboardItemsController extends Controller
      */
     public function show($id)
     {
-        //
+        $item = Item::with(['gallery'])->find($id);
+        // dd($item);
+        return view('dashboardAdmin.pages.items.detailsComponent', [
+            'title' => $item->name,
+            'items' => $item
+        ]);
     }
 
     /**
@@ -78,9 +83,10 @@ class DashboardItemsController extends Controller
      */
     public function edit($id)
     {
+        $data = Item::findOrFail($id);
         return view('dashboardAdmin.pages.items.update', [
             'title' => 'Ubah Items',
-            'item' => Item::all($id),
+            'item' => $data,
             'category' => Category::all()
         ]);
     }
@@ -94,7 +100,21 @@ class DashboardItemsController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $item = Item::findOrFail($id);
+        $validatedData = $request->validate([
+            'name' => 'required|max:255',
+            'city' => 'required|max:255',
+            'country' => 'required|max:255',
+            'price' => 'required|integer',
+            'category_id' => 'required',
+            // 'activity_id' => 'required',
+            'description' => 'required'
+        ]);
         //
+        $item->where('id', $item->id)
+            ->update($validatedData);
+        // $airplane->findOrFail($id);
+        return redirect()->route('list-item.index');
     }
 
     /**
@@ -105,6 +125,8 @@ class DashboardItemsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $items = Item::findOrFail($id);
+        $items->delete();
+        return redirect()->route('list-item.index');
     }
 }

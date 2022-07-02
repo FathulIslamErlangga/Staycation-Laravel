@@ -32,13 +32,13 @@
 
                                                <td>
                                                    {{-- <a href="{{ route('list-item.gallery') }}" class="btn btn-info btn-sm"> --}}
-                                                   <a href="#" class="btn btn-info btn-sm">
+                                                   <a href="{{ route('list-item.show', $item->id) }}" class="btn btn-info btn-sm">
                                                        <i class="fa fa-picture-o"></i>
                                                    </a>
-                                                   <a href="" class="btn btn-primary btn-sm">
+                                                   <a href="{{ route('list-item.edit', $item->id) }}" class="btn btn-primary btn-sm">
                                                        <i class="fa fa-pencil"></i>
                                                    </a>
-                                                   <form action="#" method="post" class="d-inline">
+                                                   <form action="{{ route('list-item.destroy', $item->id) }}" method="post" class="d-inline">
                                                        @csrf
                                                        @method('delete')
                                                        <button class="btn btn-danger btn-sm">
@@ -48,12 +48,18 @@
                                                </td>
                                             </tr>
                                            @empty
-                                               
+                                           <td colspan="6" class="text-center p-5">
+                                            Data Not Found
+                                            <a href="{{ route('list-item.create') }}" class="d-block">Create Data</a>
+                                        </td>
                                            @endforelse
                                     </tbody>
                                 </table>
                             </div>
                         </div>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        {{ $items->links() }}
                     </div>
                 </div>
             </div>

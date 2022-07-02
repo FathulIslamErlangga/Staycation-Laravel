@@ -23,7 +23,7 @@ class ApiController extends Controller
         $category = Category::all();
         $category = $category->load('items.gallery');
         if ($category) {
-            return ResponseFormatter::success($category);
+            return ResponseFormatter::success($category, 'Data Berhasil di Ambil');
         } else {
             return ResponseFormatter::error(null, 'Data Not Found');
         }

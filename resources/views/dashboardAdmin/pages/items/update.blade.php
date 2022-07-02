@@ -7,7 +7,7 @@
                 <small>{{ $item->name }}</small>
             </div>
             <div class="card-body card-block">
-                <form action="{{ route('list-item.update') }}" method="post">
+                <form action="{{route('list-item.update',$item->id)  }}" method="post">
                     @method('PUT')
                     @csrf
                     <div class="form-group">
@@ -18,27 +18,31 @@
                         <label class="uk-form-label" for="form-stacked-select">category</label>
                         <div class="uk-form-controls">
                             <select class="uk-select" id="form-stacked-select" name="category_id">
-                                @foreach ($category as $categories)
-                                    <option value="{{ $categories->id }}">{{ $categories->name }}</option>
-                                @endforeach
+                            @foreach ($category as $i)
+                                @if (old('category_id', $i->name) == $i->id)
+                                
+                                <option value="{{ $i->id }}" selected>{{ $i->name }}</option>
+                                @endif
+                                <option value="{{ $i->id }}">{{ $i->name }}</option>
+                              @endforeach
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="city" class="form-control-label">City</label>
-                        <input type="text" name="city" class="form-control @error('city') is-invalid @enderror" value="{{ old('city') }}">
+                        <input type="text" name="city" class="form-control @error('city') is-invalid @enderror"  value="{{ old('name') ?  old('name') : $item->city }}">
                     </div>
                     <div class="form-group">
                         <label for="country" class="form-control-label">country</label>
-                        <input type="text" name="country" class="form-control @error('country') is-invalid @enderror" value="{{ old('country') }}">
+                        <input type="text" name="country" class="form-control @error('country') is-invalid @enderror"  value="{{ old('name') ?  old('name') : $item->country }}">
                     </div>
                     <div class="form-group">
                         <label for="price" class="form-control-label">price</label>
-                        <input type="text" name="price" class="form-control @error('price') is-invalid @enderror" value="{{ old('price') }}">
+                        <input type="text" name="price" class="form-control @error('price') is-invalid @enderror"  value="{{ old('name') ?  old('name') : $item->price }}">
                     </div>
                     <div class="form-group">
                         <label for="description" class="form-control-label">description</label>
-                        <textarea class="form-control summernote  @error('description') is-invalid @enderror" placeholder="Leave a comment here" id="description" name="description" style="height: 100px">{{ old('description') }}</textarea>
+                        <textarea class="form-control summernote  @error('description') is-invalid @enderror" placeholder="Leave a comment here" id="description" name="description" style="height: 100px" >{{$item->description }}</textarea>
                     </div>
                     <div class="form-group">
                         <button class="btn btn-primary btn-block" type="submit">

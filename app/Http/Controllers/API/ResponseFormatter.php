@@ -18,11 +18,10 @@ class ResponseFormatter
         'category' => null
     ];
 
-    public function success($category = null, $gallery = null, $message = null)
+    public function success($category = null, $message = null)
     {
         self::$response['meta']['message'] = $message;
         self::$response['category'] = $category;
-        self::$response['gallery'] = $gallery;
         return response()->json(self::$response, self::$response['meta']['code']);
     }
     public function error($category = null, $gallery = null, $message = null, $code = 400)

@@ -6,7 +6,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DashboardAdminController;
 use App\Http\Controllers\DashboardGalleryController;
 use App\Http\Controllers\DashboardItemsController;
-use App\Http\Controllers\ItemController;
+use App\Http\Controllers\HeroController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Resources\DataResource;
 use App\Models\Category;
@@ -23,7 +23,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [ItemController::class, 'index']);
+Route::get('/', [HeroController::class, 'index']);
+Route::get('/penginapan/{item:slug}', [HeroController::class, 'showItem']);
 // Route::get('api/data', [DataController::class, 'all']);
 // Route::get('api/data1/{id}', function ($id) {
 //     return new DataResource(Category::findOrFail($id));

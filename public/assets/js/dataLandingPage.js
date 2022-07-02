@@ -1,6 +1,6 @@
 function landingPage(){
     // console.log('http://127.0.0.1:8000/api/data1')
-    fetch('http://127.0.0.1:8000/api/data1')
+    fetch('http://staycation.infinityfreeapp.com/')
     .then(response => response.json())
     .then(response => {
         console.log(response.category[0])
